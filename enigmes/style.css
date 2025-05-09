@@ -5,6 +5,7 @@ body {
     padding: 20px;
     background-color: #f5f5f5;
     color: #333;
+    line-height: 1.6;
 }
 h1 {
     color: #2c3e50;
@@ -36,4 +37,147 @@ h1 {
 #next-link {
     color: #e74c3c;
     font-weight: bold;
+}
+
+
+#qr-container {
+    margin-top: 20px;
+    text-align: center;
+}
+#qr-image {
+    width: 200px;
+    border: 3px solid #2ecc71;
+    border-radius: 10px;
+    padding: 10px;
+    background: white;
+}
+#loading {
+    color: #e74c3c;
+    font-style: italic;
+}
+
+#code-container {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow-x: auto;
+}
+#execute-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+#execute-btn:hover {
+    background-color: #2980b9;
+}
+#enigme {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-left: 4px solid #2ecc71;
+    display: none;
+}
+#console-output {
+    background-color: #000;
+    color: #0f0;
+    padding: 10px;
+    font-family: monospace;
+    height: 100px;
+    overflow-y: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+#results {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #282c34;
+    color: #abb2bf;
+    border-radius: 5px;
+    font-family: monospace;
+    min-height: 100px;
+    overflow-x: auto;
+}
+
+
+#database-ui {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+#query-input {
+    width: 100%;
+    padding: 10px;
+    font-family: monospace;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#git-terminal {
+    background-color: #282c34;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    min-height: 200px;
+}
+.command-line {
+    display: flex;
+    margin-bottom: 10px;
+}
+.prompt {
+    color: #50fa7b;
+    margin-right: 10px;
+}
+#git-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: monospace;
+    outline: none;
+}
+#git-output {
+    white-space: pre-wrap;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+#execute-git {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+#execute-git:hover {
+    background-color: #2980b9;
+}
+
+.branch-master {
+    color: #ff79c6;
+}
+.branch-feature {
+    color: #8be9fd;
+}
+
+.error {
+    color: #e74c3c;
+}
+.success {
+    color: #2ecc71;
 }

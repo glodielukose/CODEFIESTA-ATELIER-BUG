@@ -4,60 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug 4 - Injection SQL | Chasse au trésor Dev</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: 'Courier New', monospace;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        #database-ui {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        #query-input {
-            width: 100%;
-            padding: 10px;
-            font-family: monospace;
-            border: 2px solid #3498db;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        #execute-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        #execute-btn:hover {
-            background-color: #2980b9;
-        }
-        #results {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #282c34;
-            color: #abb2bf;
-            border-radius: 5px;
-            font-family: monospace;
-            min-height: 100px;
-            overflow-x: auto;
-        }
+
+
+
         #enigme {
             margin-top: 20px;
             padding: 15px;
@@ -65,15 +16,7 @@
             border-left: 4px solid #2ecc71;
             display: none;
         }
-        .hidden {
-            display: none;
-        }
-        .error {
-            color: #e74c3c;
-        }
-        .success {
-            color: #2ecc71;
-        }
+
     </style>
 </head>
 <body>

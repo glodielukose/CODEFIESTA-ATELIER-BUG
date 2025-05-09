@@ -41,13 +41,13 @@ function App() {
       alert('Nom requis !');
       return;
     }
-    setTeams([...teams, { name: newTeamName, step: 1 }]);
+    setTeams([...teams, { name: newTeamName, step: 0 }]);
     setNewTeamName('');
   };
 
-  const nextStep = (teamName) => {
+  const addPoints = (teamName, points = 1) => {
     setTeams(teams.map(team => 
-      team.name === teamName ? { ...team, step: team.step + 1 } : team
+      team.name === teamName ? { ...team, step: team.step + points } : team
     ));
   };
 
@@ -126,7 +126,7 @@ function App() {
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">#</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Équipe</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bugs Résolus</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -143,15 +143,22 @@ function App() {
                       {team.name}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
-                      {team.step}/5
+                      {team.step} points
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap flex gap-2">
                       <button 
-                        onClick={() => nextStep(team.name)} 
+                        onClick={() => addPoints(team.name, 1)} 
                         disabled={!isRunning}
                         className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-sm rounded disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                       >
-                        +1 Bug
+                        +1 Point
+                      </button>
+                      <button 
+                        onClick={() => addPoints(team.name, 5)} 
+                        disabled={!isRunning}
+                        className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                      >
+                        +5 Points
                       </button>
                       <button 
                         onClick={() => deleteTeam(team.name)}
