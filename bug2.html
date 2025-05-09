@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug 2 - API Morte | Chasse au trésor Dev</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        #qr-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #qr-image {
+            width: 200px;
+            border: 3px solid #2ecc71;
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+        }
+        .hidden {
+            display: none;
+        }
+        #loading {
+            color: #e74c3c;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Étape 2: L'API Morte</h1>
+    <p>Un endpoint API ne répond pas correctement. Corrigez la comparaison dans le code.</p>
+    
+    <div id="loading">Chargement de l'énigme...</div>
+    
+    <div id="qr-container" class="hidden">
+        <h3>Énigme Dev :</h3>
+        <p><strong>Trouvez l'année du premier "Hello World"</strong></p>
+        <img id="qr-image" src="qr-helloworld.png" alt="QR Code énigme">
+        <p>Scannez ce QR code ou utilisez l'URL : <code>/bug3.html?année=1972</code></p>
+    </div>
+
+    <script>
+        // Correction du bug : remplacer = par ===
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("/api/treasure?key=1234")
+                .then(res => res.text())
+                .then(data => {
+                    if (data = "success") {  // CORRECTION ICI
+                        document.getElementById("loading").classList.add("hidden");
+                        const qrContainer = document.getElementById("qr-container");
+                        qrContainer.classList.remove("hidden");
+                        
+                        // Animation pour le QR code
+                        setTimeout(() => {
+                            qrContainer.style.opacity = 1;
+                        }, 100);
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur API:", error);
+                    document.getElementById("loading").textContent = 
+                        "Erreur de chargement. Vérifiez la console (F12).";
+                });
+        });
+
+        // Easter egg console
+        console.log("%cIndice technique:", "color: #27ae60", 
+                   "Corrigez l'opérateur de comparaison dans le fetch!");
+        console.log("%cHello World a été créé en 1972 par Brian Kernighan", "color: #3498db");
+    </script>
+</body>
+</html>

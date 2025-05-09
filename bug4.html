@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug 4 - Injection SQL | Chasse au trésor Dev</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        #database-ui {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #query-input {
+            width: 100%;
+            padding: 10px;
+            font-family: monospace;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #execute-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #execute-btn:hover {
+            background-color: #2980b9;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #282c34;
+            color: #abb2bf;
+            border-radius: 5px;
+            font-family: monospace;
+            min-height: 100px;
+            overflow-x: auto;
+        }
+        #enigme {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-left: 4px solid #2ecc71;
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .success {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <h1>Étape 4: Danger d'Injection</h1>
+    <p>La requête SQL suivante est vulnérable aux injections. Trouvez comment la sécuriser.</p>
+    
+    <div id="database-ui">
+        <h3>Interface de Requêtage</h3>
+        <input type="text" id="query-input" value="SELECT * FROM treasures WHERE id = 1" placeholder="Entrez votre requête SQL">
+        <button id="execute-btn">Exécuter</button>
+        
+        <div id="results">
+            <p>Résultats s'afficheront ici...</p>
+        </div>
+    </div>
+    
+    <div id="enigme" class="hidden">
+        <h3>Énigme de Sécurité :</h3>
+        <p><strong>Qui est le célèbre personnage utilisé pour expliquer les injections SQL ?</strong></p>
+        <p>Réponse : <input type="text" id="security-answer" placeholder="Nom complet"> 
+        <button id="validate-btn">Valider</button></p>
+        <p class="hidden" id="next-step">Prochaine étape : <code>/bug5.html?hero=bobby_tables</code></p>
+    </div>
+
+    <script>
+        // Données simulées
+        const treasures = [
+            { id: 1, name: "Épée légendaire", value: 5000 },
+            { id: 2, name: "Anneau perdu", value: 10000 },
+            { id: 3, name: "Carte au trésor", value: 7500 }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const executeBtn = document.getElementById("execute-btn");
+            const queryInput = document.getElementById("query-input");
+            const resultsDiv = document.getElementById("results");
+            const enigme = document.getElementById("enigme");
+            const validateBtn = document.getElementById("validate-btn");
+            const nextStep = document.getElementById("next-step");
+
+            // Simulation de base de données
+            executeBtn.addEventListener("click", () => {
+                const query = queryInput.value;
+                resultsDiv.innerHTML = "";
+                
+                // Détection d'injection SQL (version vulnérable)
+                if (query.includes("1 OR 1=1")) {
+                    resultsDiv.innerHTML = "<p class='error'>⚠️ Requête dangereuse détectée! Vous avez exposé TOUS les trésors!</p>";
+                    resultsDiv.innerHTML += "<pre>" + JSON.stringify(treasures, null, 2) + "</pre>";
+                    
+                    // Débloque l'énigme après 1.5s
+                    setTimeout(() => {
+                        enigme.classList.remove("hidden");
+                        console.log("%cÉnigme débloquée: Qui est Bobby Tables?", "color: #3498db");
+                    }, 1500);
+                } 
+                else if (query.includes("?")) {
+                    resultsDiv.innerHTML = "<p class='success'>✅ Requête sécurisée! Vous utilisez des paramètres préparés.</p>";
+                    resultsDiv.innerHTML += "<pre>" + JSON.stringify([treasures[0]], null, 2) + "</pre>";
+                }
+                else {
+                    resultsDiv.innerHTML = "<p>Résultat :</p>";
+                    resultsDiv.innerHTML += "<pre>" + JSON.stringify([treasures[0]], null, 2) + "</pre>";
+                }
+            });
+
+            // Validation de l'énigme
+            validateBtn.addEventListener("click", () => {
+                const answer = document.getElementById("security-answer").value.toLowerCase();
+                if (answer.includes("bobby tables") || answer.includes("robert'); drop table students")) {
+                    nextStep.classList.remove("hidden");
+                    console.log("%cBravo! La réponse est bien 'Bobby Tables'", "color: #2ecc71");
+                } else {
+                    alert("Presque! Cherchez une référence célèbre sur les injections SQL");
+                }
+            });
+
+            // Easter egg
+            console.log("%cIndice: Pensez à la bande dessinée XKCD", "color: #9b59b6");
+            console.log("%cSELECT * FROM devs WHERE knowledge > 0;", "color: #3498db");
+        });
+    </script>
+</body>
+</html>
