@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug 5 - Catastrophe Git | Chasse au trésor Dev</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        #git-terminal {
+            background-color: #282c34;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            min-height: 200px;
+        }
+        .command-line {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .prompt {
+            color: #50fa7b;
+            margin-right: 10px;
+        }
+        #git-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: monospace;
+            outline: none;
+        }
+        #git-output {
+            white-space: pre-wrap;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+        #execute-git {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        #execute-git:hover {
+            background-color: #2980b9;
+        }
+        #enigme {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-left: 4px solid #2ecc71;
+            display: none;
+        }
+        .branch-master {
+            color: #ff79c6;
+        }
+        .branch-feature {
+            color: #8be9fd;
+        }
+        .error {
+            color: #ff5555;
+        }
+        .success {
+            color: #50fa7b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Étape 5: Catastrophe Git</h1>
+    <p>Un conflit de merge n'a pas été résolu. Utilisez les commandes Git pour réparer le désastre.</p>
+    
+    <div id="git-terminal">
+        <div class="command-line">
+            <span class="prompt">$</span>
+            <input type="text" id="git-input" value="git status" autofocus>
+        </div>
+        <button id="execute-git">Exécuter</button>
+        
+        <div id="git-output">
+            <span class="branch-master">* master</span> (détaché HEAD)
+            <br>Vous avez des chemins non fusionnés.
+            <br>(fixez les conflits et lancez "git commit")
+            <br>(utilisez "git merge --abort" pour annuler le merge)
+            <br><br>
+            <span class="error">conflit : merge dans index.html</span>
+            <br>chemins non fusionnés : <span class="error">index.html</span>
+        </div>
+    </div>
+    
+    <div id="enigme" class="hidden">
+        <h3>Énigme Git :</h3>
+        <p><strong>Quelle commande magique peut sauver votre historique Git après un commit malheureux ?</strong></p>
+        <p>Réponse : <input type="text" id="git-answer" placeholder="git ____"> 
+        <button id="validate-btn">Valider</button></p>
+        <p class="hidden" id="next-step">Prochaine étape : <code>/bug6.html?magic=git_reflog</code></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const gitInput = document.getElementById("git-input");
+            const gitOutput = document.getElementById("git-output");
+            const executeBtn = document.getElementById("execute-git");
+            const enigme = document.getElementById("enigme");
+            const validateBtn = document.getElementById("validate-btn");
+            const nextStep = document.getElementById("next-step");
+
+            // Simulation Git
+            executeBtn.addEventListener("click", () => {
+                const command = gitInput.value.trim();
+                let output = "";
+                
+                if (command === "git status") {
+                    output = `<span class="branch-master">* master</span> (détaché HEAD)
+                    <br>Vous avez des chemins non fusionnés.
+                    <br>(fixez les conflits et lancez "git commit")
+                    <br><br>
+                    <span class="error">conflit : merge dans index.html</span>
+                    <br>chemins non fusionnés : <span class="error">index.html</span>`;
+                }
+                else if (command === "git merge --abort") {
+                    output = `<span class="success">Merge annulé avec succès</span>
+                    <br>Retour à la branche master propre.`;
+                    enigme.classList.remove("hidden");
+                }
+                else if (command.startsWith("git checkout")) {
+                    output = `Note : basculé sur '${command.split(' ')[2]}'`;
+                }
+                else {
+                    output = `Commande inconnue : ${command}`;
+                }
+                
+                gitOutput.innerHTML = output;
+                gitInput.value = "";
+            });
+
+            // Validation de l'énigme
+            validateBtn.addEventListener("click", () => {
+                const answer = document.getElementById("git-answer").value.toLowerCase();
+                if (answer.includes("git reflog") || answer.includes("reflog")) {
+                    nextStep.classList.remove("hidden");
+                    console.log("%cBravo! git reflog est la machine à remonter le temps", "color: #2ecc71");
+                } else {
+                    alert("Presque! Cherchez la commande qui montre l'historique COMPLET");
+                }
+            });
+
+            // Easter eggs console
+            console.log("%cIndice Git: Cette commande montre même les commits 'perdus'", "color: #9b59b6");
+            console.log("%c$ git ____", "color: #50fa7b; font-weight: bold");
+        });
+
+        console.log('yes')
+    </script>
+</body>
+</html>

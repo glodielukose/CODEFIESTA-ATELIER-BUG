@@ -1,0 +1,39 @@
+body {
+    font-family: 'Courier New', monospace;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+h1 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+#btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+#btn:hover {
+    background-color: #2980b9;
+}
+.hidden {
+    display: none;
+}
+#enigme {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-left: 4px solid #2ecc71;
+}
+#next-link {
+    color: #e74c3c;
+    font-weight: bold;
+}

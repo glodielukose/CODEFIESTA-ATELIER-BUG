@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug 3 - Boucle Infinie | Chasse au trésor Dev</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        #code-container {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        #execute-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #execute-btn:hover {
+            background-color: #2980b9;
+        }
+        #enigme {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-left: 4px solid #2ecc71;
+            display: none;
+        }
+        #console-output {
+            background-color: #000;
+            color: #0f0;
+            padding: 10px;
+            font-family: monospace;
+            height: 100px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .success {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <h1>Étape 3: La Boucle Sans Fin</h1>
+    <p>Un algorithme de recherche de trésor ne termine pas son exécution. Corrigez la fonction.</p>
+    
+    <div id="code-container">
+        <pre><code>
+function findTreasure() {
+    let x = 0;
+    while (x < 10) { // ERREUR : Parenthèse mal fermée + pas d'incrément
+        console.log("Cherchez...");
+    }
+}
+        </code></pre>
+    </div>
+    
+    <button id="execute-btn">Exécuter le code</button>
+    
+    <div id="console-output"></div>
+    
+    <div id="enigme">
+        <h3>Énigme Livresque :</h3>
+        <p><strong>Combien de mots contient le titre complet du livre "The Pragmatic Programmer" ?</strong></p>
+        <p>Utilisez la réponse pour continuer : <code>/bug4.html?mots=<span id="answer">12</span></code></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const executeBtn = document.getElementById("execute-btn");
+            const consoleOutput = document.getElementById("console-output");
+            const enigme = document.getElementById("enigme");
+            
+            // Mock console.log pour afficher dans la page
+            const originalConsoleLog = console.log;
+            console.log = function(message) {
+                originalConsoleLog.apply(console, arguments);
+                consoleOutput.innerHTML += message + "<br>";
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+            
+            executeBtn.addEventListener("click", () => {
+                consoleOutput.innerHTML = "";
+                
+                try {
+                    // Version buggée originale
+                    function findTreasureBugged() {
+                        let x = 0;
+                        while (x < 10) {
+                            console.log("Cherchez...");
+                        }
+                    }
+                    
+                    // Version corrigée pour comparaison
+                    function findTreasureFixed() {
+                        let x = 0;
+                        while (x < 10) {
+                            console.log("Cherchez...");
+                            x++;
+                        }
+                    }
+                    
+                    // Teste si le code est corrigé
+                    const userCode = findTreasureBugged.toString();
+                    if (userCode.includes("x++") || userCode.includes("x += 1") || userCode.includes("x = x + 1")) {
+                        console.log("%cCode corrigé avec succès!", "color: #2ecc71");
+                        
+                        // Affiche l'énigme après un délai
+                        setTimeout(() => {
+                            enigme.style.display = "block";
+                            console.log("%cÉnigme débloquée: Combien de mots dans 'The Pragmatic Programmer'?", "color: #3498db");
+                        }, 1000);
+                        
+                        // Exécute la version corrigée
+                        setTimeout(findTreasureFixed, 1500);
+                    } else {
+                        console.log("%cLa boucle est toujours infinie!", "color: #e74c3c");
+                        console.log("%cIndice: Il manque l'incrémentation de x", "color: #f39c12");
+                    }
+                } catch (e) {
+                    console.log("%cErreur de syntaxe: " + e.message, "color: #e74c3c");
+                }
+            });
+            
+            // Easter egg
+            console.log("%cAstuce: La réponse à l'énigme est dans l'URL suivante", "color: #9b59b6");
+        });
+    </script>
+</body>
+</html>

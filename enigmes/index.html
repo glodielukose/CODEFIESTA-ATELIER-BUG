@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug 1 - Le Bouton Muet | Chasse au trésor Dev</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Étape 1: Le Bouton Muet</h1>
+    <p>Un ancien membre a saboté ce bouton. Corrigez le code pour débloquer l'indice suivant.</p>
+    
+    <button id="btn">Débloquer l'énigme</button>
+    
+    <div id="enigme" class="hidden">
+        <h3>Énigme Dev :</h3>
+        <ul>
+            <li>1. <a href="https://codebeautify.org/base64-to-image-converter">https://codebeautify.org/base64-to-image-converter</a></li>
+            <li>2. Je suis le cobaye prefere des IA</li>
+        </ul>
+        
+        <p>
+            <code>"The treasure is in the console"</code>
+        </p>
+    </div>
+
+    <script type="module">
+        import {base64} from './script1.js'
+        const btn = document.getElementById("btn");
+        
+        // Bug principal à corriger
+        if(btn){
+            btn.addEventListener("click", () => {
+            // Affiche l'énigme
+            document.getElementById("enigme").classList.remove("hidden");
+            
+            // Message de confirmation
+            const response = "false"; // La réponse attendue
+            // alert(`Bravo ! Vous avez débloqué la première énigme.\n\nQuestion: Que vaut 'NaN === NaN' en JavaScript ?\n\nIndice: La réponse est "${response}". Utilisez-la pour la suite.`);
+            
+            // Affiche la réponse dans la page après un délai
+            setTimeout(() => {
+                document.getElementById("answer-placeholder").textContent = response;
+            }, 1500);
+            
+            // Indice pour la console (pour les participants qui y pensent)
+            console.log(base64);
+            });
+        }
+
+        // Petit easter egg dans la console
+        console.log("%cBienvenue dans la chasse au trésor!", "color: #e74c3c; font-size: 14px; font-weight: bold;");
+        console.log("%cAstuce: Vérifiez toujours la console pour des indices supplémentaires!", "color: #3498db;");
+    </script>
+</body>
+</html>
