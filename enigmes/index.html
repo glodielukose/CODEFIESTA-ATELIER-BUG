@@ -17,6 +17,7 @@
         <ul>
             <li>1. <a href="https://codebeautify.org/base64-to-image-converter">https://codebeautify.org/base64-to-image-converter</a></li>
             <li>2. Je suis le cobaye prefere des IA</li>
+            <li>3. <a href="http://127.0.0.1:5500/enigmes/bug2.html">Bug 2</a></li>
         </ul>
         
         <p>
@@ -25,30 +26,21 @@
     </div>
 
     <script type="module">
-        import {base64} from './script1.js'
+        import {base64} from './script.js'
         const btn = document.getElementById("btn");
         
-        // Bug principal à corriger
+        
         if(btn){
-            btn.addEventListener("click", () => {
-            // Affiche l'énigme
+            btn.addEventListner("click", () => {
+            
             document.getElementById("enigme").classList.remove("hidden");
             
-            // Message de confirmation
-            const response = "false"; // La réponse attendue
-            // alert(`Bravo ! Vous avez débloqué la première énigme.\n\nQuestion: Que vaut 'NaN === NaN' en JavaScript ?\n\nIndice: La réponse est "${response}". Utilisez-la pour la suite.`);
-            
-            // Affiche la réponse dans la page après un délai
-            setTimeout(() => {
-                document.getElementById("answer-placeholder").textContent = response;
-            }, 1500);
-            
-            // Indice pour la console (pour les participants qui y pensent)
+            //indice
             console.log(base64);
             });
         }
 
-        // Petit easter egg dans la console
+        // easter egg
         console.log("%cBienvenue dans la chasse au trésor!", "color: #e74c3c; font-size: 14px; font-weight: bold;");
         console.log("%cAstuce: Vérifiez toujours la console pour des indices supplémentaires!", "color: #3498db;");
     </script>

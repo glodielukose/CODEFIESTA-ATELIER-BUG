@@ -1702,3 +1702,18 @@ el5uVh7GVJpXJj546L/FuEuLnu6D5H+YH2Mq99p475Y7cnfdpuhjmPRZUzTaLKxM8pqrxu4NWdGT
 YcWuJK9DJiqz2DWWKvqdTpwY0fNJ6gfSETjCKq/N3hbFV12DYc7g9djnduKfDb3U9v7SM5sYdZa+
 y1nzjtMY0tI5OMGUzXHJNhJGNLzT3GXpr4uTzamWUXK0a7enWTYoam0djIsOD12KDs+UNCrtnhex
 lTErUfbPE84aLa6HZ3EY6npAgb05l7SpQzynKxlp0sGgHh1MAZqiM5Se0IR6oyif/9k=`
+
+
+
+export const enigmeSolution = {
+    reponse: "Guido42",
+    indice: "Le créateur de Python s'appelle Guido van Rossum",
+    annee: 1991,
+    getSolution: function() {
+        return `${this.indice} (${this.annee}) → ${this.reponse}`;
+    }
+};
+
+export function verifierReponse(saisie) {
+    return saisie === enigmeSolution.reponse;
+}

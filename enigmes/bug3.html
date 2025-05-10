@@ -5,6 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug 3 - Boucle Infinie | Chasse au trésor Dev</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        #code-container {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        #console-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        #enigme {
+            display: none;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        pre {
+            margin: 0;
+        }
+        code {
+            color: #d4d4d4;
+        }
+        .python-code {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #d4d4d4;
+            display: inline-block;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Étape 3: La Boucle Sans Fin</h1>
@@ -14,7 +70,7 @@
         <pre><code>
 function findTreasure() {
     let x = 0;
-    while (x < 10) { // ERREUR : Parenthèse mal fermée + pas d'incrément
+    while (x < 10) {
         console.log("Cherchez...");
     }
 }
@@ -26,9 +82,11 @@ function findTreasure() {
     <div id="console-output"></div>
     
     <div id="enigme">
-        <h3>Énigme Livresque :</h3>
-        <p><strong>Combien de mots contient le titre complet du livre "The Pragmatic Programmer" ?</strong></p>
-        <p>Utilisez la réponse pour continuer : <code>/bug4.html?mots=<span id="answer">12</span></code></p>
+        <h3>Énigme Python :</h3>
+        <div class="python-code">
+# Le mot de passe est le nom du créateur de Python + 42 → ""
+        </div>
+        <p><a href="bug4.html">Continuer</a></p>
     </div>
 
     <script>
@@ -37,7 +95,6 @@ function findTreasure() {
             const consoleOutput = document.getElementById("console-output");
             const enigme = document.getElementById("enigme");
             
-            // Mock console.log pour afficher dans la page
             const originalConsoleLog = console.log;
             console.log = function(message) {
                 originalConsoleLog.apply(console, arguments);
@@ -49,35 +106,28 @@ function findTreasure() {
                 consoleOutput.innerHTML = "";
                 
                 try {
-                    // Version buggée originale
                     function findTreasureBugged() {
                         let x = 0;
                         while (x < 10) {
                             console.log("Cherchez...");
+                           
                         }
                     }
+
                     
-                    // Version corrigée pour comparaison
-                    function findTreasureFixed() {
-                        let x = 0;
-                        while (x < 10) {
-                            console.log("Cherchez...");
-                            x++;
-                        }
-                    }
-                    
-                    // Teste si le code est corrigé
+                    // Teste 
                     const userCode = findTreasureBugged.toString();
                     if (userCode.includes("x++") || userCode.includes("x += 1") || userCode.includes("x = x + 1")) {
                         console.log("%cCode corrigé avec succès!", "color: #2ecc71");
                         
-                        // Affiche l'énigme après un délai
+                        
                         setTimeout(() => {
                             enigme.style.display = "block";
-                            console.log("%cÉnigme débloquée: Combien de mots dans 'The Pragmatic Programmer'?", "color: #3498db");
+                            console.log("%cÉnigme débloquée: Trouvez le mot de passe Python!", "color: #3498db");
+                            console.log("%cIndice: Le créateur de Python s'appelle Guido van Rossum", "color: #f39c12");
                         }, 1000);
                         
-                        // Exécute la version corrigée
+                        
                         setTimeout(findTreasureFixed, 1500);
                     } else {
                         console.log("%cLa boucle est toujours infinie!", "color: #e74c3c");
@@ -88,8 +138,9 @@ function findTreasure() {
                 }
             });
             
-            // Easter egg
-            console.log("%cAstuce: La réponse à l'énigme est dans l'URL suivante", "color: #9b59b6");
+            // Easter eggs
+            console.log("%cAstuce: La réponse combine un nom et un nombre", "color: #9b59b6");
+            console.log("%cFun fact: Python a été créé en 1991", "color: #1abc9c");
         });
     </script>
 </body>

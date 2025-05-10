@@ -5,32 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug 2 - API Morte | Chasse au trésor Dev</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .hidden { display: none; }
+        #qr-container { opacity: 0; transition: opacity 0.5s; }
+        #qr-image { max-width: 200px; border: 1px solid #ddd; }
+        
+        #fake-qr {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            opacity: 0.3;
+        }
+        
+        #indice-css::after {
+            content: url('./assets/qr-helloworld.png');
+            display: none;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 1px;
+            background: url('./assets/qr-helloworld.png') no-repeat;
+            background-size: 0 0;
+            z-index: -1;
+        }
+        
+    </style>
 </head>
 <body>
     <h1>Étape 2: L'API Morte</h1>
     <p>Un endpoint API ne répond pas correctement. Corrigez la comparaison dans le code.</p>
     
-    <div id="loading">Chargement de l'énigme...</div>
+    <div id="loading"><a href="bug3.html">Chargement du bug suivant...</a></div>
     
     <div id="qr-container" class="hidden">
         <h3>Énigme Dev :</h3>
-        <p><strong>Trouvez l'année du premier "Hello World"</strong></p>
-        <img id="qr-image" src="qr-helloworld.png" alt="QR Code énigme">
-        <p>Scannez ce QR code ou utilisez l'URL : <code>/bug3.html?année=1972</code></p>
+        <p><strong>Je suis l'un des meilleurs outils de debogage</strong></p>
+        <img id="qr-image" src="./assets/qr-helloworld.png" alt="QR Code énigme">
+        
     </div>
+    
+    
+    <div id="indice-css">
+    </div>
+    
 
     <script>
-        // Correction du bug : remplacer = par ===
+        
         document.addEventListener("DOMContentLoaded", () => {
             fetch("/api/treasure?key=1234")
                 .then(res => res.text())
                 .then(data => {
-                    if (data = "success") {  // CORRECTION ICI
+                    if (data ="success") {  
                         document.getElementById("loading").classList.add("hidden");
                         const qrContainer = document.getElementById("qr-container");
                         qrContainer.classList.remove("hidden");
                         
-                        // Animation pour le QR code
+                        
                         setTimeout(() => {
                             qrContainer.style.opacity = 1;
                         }, 100);
@@ -43,10 +79,24 @@
                 });
         });
 
-        // Easter egg console
+        // Easter eggs 
         console.log("%cIndice technique:", "color: #27ae60", 
                    "Corrigez l'opérateur de comparaison dans le fetch!");
-        console.log("%cHello World a été créé en 1972 par Brian Kernighan", "color: #3498db");
+        console.log("%cLe QR code est caché de 4 manières différentes dans cette page...", "color: #e74c3c");
+        
+        
+        const hiddenQR = `
+        <!-- 
+            Vous cherchez le vrai QR code? Il est aussi caché dans:
+            1. Le CSS (content: url(...))
+            2. Une image de fond invisible
+        -->
+        `;
     </script>
+    
+    <!-- 
+        Indice pour les plus perspicaces: inspectez le pseudo-élément ::after 
+        de l'élément avec l'id "indice-css" pour trouver le QR code caché.
+    -->
 </body>
 </html>

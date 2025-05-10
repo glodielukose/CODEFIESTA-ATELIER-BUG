@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bug 4 - Injection SQL | Chasse au trésor Dev</title>
+    <title>Bug 5 - Catastrophe Git | Chasse au trésor Dev</title>
     <link rel="stylesheet" href="style.css">
     <style>
-
 
 
         #enigme {
@@ -17,87 +16,94 @@
             display: none;
         }
 
+
     </style>
 </head>
 <body>
-    <h1>Étape 4: Danger d'Injection</h1>
-    <p>La requête SQL suivante est vulnérable aux injections. Trouvez comment la sécuriser.</p>
+    <h1>Étape 4: Catastrophe Git</h1>
+    <p>Un conflit de merge n'a pas été résolu. Utilisez les commandes Git pour réparer le désastre.</p>
     
-    <div id="database-ui">
-        <h3>Interface de Requêtage</h3>
-        <input type="text" id="query-input" value="SELECT * FROM treasures WHERE id = 1" placeholder="Entrez votre requête SQL">
-        <button id="execute-btn">Exécuter</button>
+    <div id="git-terminal">
+        <div class="command-line">
+            <span class="prompt">$</span>
+            <input type="text" id="git-input" value="git status" autofocus>
+        </div>
+        <button id="execute-git">Exécuter</button>
         
-        <div id="results">
-            <p>Résultats s'afficheront ici...</p>
+        <div id="git-output">
+            <span class="branch-master">* master</span> (détaché HEAD)
+            <br>Vous avez des chemins non fusionnés.
+            <br>(fixez les conflits et lancez "git commit")
+            <br>(utilisez "git merge --abort" pour annuler le merge)
+            <br><br>
+            <span class="error">conflit : merge dans index.html</span>
+            <br>chemins non fusionnés : <span class="error">index.html</span>
         </div>
     </div>
     
-    <div id="enigme" class="hidden">
-        <h3>Énigme de Sécurité :</h3>
-        <p><strong>Qui est le célèbre personnage utilisé pour expliquer les injections SQL ?</strong></p>
-        <p>Réponse : <input type="text" id="security-answer" placeholder="Nom complet"> 
+    <div id="enigm" class="hidden">
+        <h3>Énigme Git :</h3>
+        <p><strong>Quelle commande magique peut sauver votre historique Git après un commit malheureux ?</strong></p>
+        <p>Réponse : <input type="text" id="git-answer" placeholder="git ____"> 
         <button id="validate-btn">Valider</button></p>
-        <p class="hidden" id="next-step">Prochaine étape : <code>/bug5.html?hero=bobby_tables</code></p>
+        <p class="hidden" id="next-step">Bravo les gars</p>
     </div>
 
     <script>
-        // Données simulées
-        const treasures = [
-            { id: 1, name: "Épée légendaire", value: 5000 },
-            { id: 2, name: "Anneau perdu", value: 10000 },
-            { id: 3, name: "Carte au trésor", value: 7500 }
-        ];
-
         document.addEventListener("DOMContentLoaded", () => {
-            const executeBtn = document.getElementById("execute-btn");
-            const queryInput = document.getElementById("query-input");
-            const resultsDiv = document.getElementById("results");
-            const enigme = document.getElementById("enigme");
+            const gitInput = document.getElementById("git-input");
+            const gitOutput = document.getElementById("git-output");
+            const executeBtn = document.getElementById("execute-git");
+            const enigme = document.getElementById("enigm");
             const validateBtn = document.getElementById("validate-btn");
             const nextStep = document.getElementById("next-step");
 
-            // Simulation de base de données
+            // Simulation Git
             executeBtn.addEventListener("click", () => {
-                const query = queryInput.value;
-                resultsDiv.innerHTML = "";
+                const command = gitInput.value.trim();
+                let output = "";
                 
-                // Détection d'injection SQL (version vulnérable)
-                if (query.includes("1 OR 1=1")) {
-                    resultsDiv.innerHTML = "<p class='error'>⚠️ Requête dangereuse détectée! Vous avez exposé TOUS les trésors!</p>";
-                    resultsDiv.innerHTML += "<pre>" + JSON.stringify(treasures, null, 2) + "</pre>";
-                    
-                    // Débloque l'énigme après 1.5s
-                    setTimeout(() => {
-                        enigme.classList.remove("hidden");
-                        console.log("%cÉnigme débloquée: Qui est Bobby Tables?", "color: #3498db");
-                    }, 1500);
-                } 
-                else if (query.includes("?")) {
-                    resultsDiv.innerHTML = "<p class='success'>✅ Requête sécurisée! Vous utilisez des paramètres préparés.</p>";
-                    resultsDiv.innerHTML += "<pre>" + JSON.stringify([treasures[0]], null, 2) + "</pre>";
+                if (command === "git status") {
+                    output = `<span class="branch-master">* master</span> (détaché HEAD)
+                    <br>Vous avez des chemins non fusionnés.
+                    <br>(fixez les conflits et lancez "git commit")
+                    <br><br>
+                    <span class="error">conflit : merge dans index.html</span>
+                    <br>chemins non fusionnés : <span class="error">index.html</span>`;
+                }
+                else if (command === "git merge --abort") {
+                    output = `<span class="success">Merge annulé avec succès</span>
+                    <br>Retour à la branche master propre.`;
+                    enigme.classList.remove("hidden");
+                }
+                else if (command.startsWith("git checkout")) {
+                    output = `Note : basculé sur '${command.split(' ')[2]}'`;
                 }
                 else {
-                    resultsDiv.innerHTML = "<p>Résultat :</p>";
-                    resultsDiv.innerHTML += "<pre>" + JSON.stringify([treasures[0]], null, 2) + "</pre>";
+                    output = `Commande inconnue : ${command}`;
                 }
+                
+                gitOutput.innerHTML = output;
+                gitInput.value = "";
             });
 
             // Validation de l'énigme
             validateBtn.addEventListener("click", () => {
-                const answer = document.getElementById("security-answer").value.toLowerCase();
-                if (answer.includes("bobby tables") || answer.includes("robert'); drop table students")) {
+                const answer = document.getElementById("git-answer").value.toLowerCase();
+                if (answer.includes("git reflog") || answer.includes("reflog")) {
                     nextStep.classList.remove("hidden");
-                    console.log("%cBravo! La réponse est bien 'Bobby Tables'", "color: #2ecc71");
+                    console.log("%cBravo! git reflog est la machine à remonter le temps", "color: #2ecc71");
                 } else {
-                    alert("Presque! Cherchez une référence célèbre sur les injections SQL");
+                    alert("Presque! Cherchez la commande qui montre l'historique COMPLET");
                 }
             });
 
-            // Easter egg
-            console.log("%cIndice: Pensez à la bande dessinée XKCD", "color: #9b59b6");
-            console.log("%cSELECT * FROM devs WHERE knowledge > 0;", "color: #3498db");
+            // Easter eggs
+            console.log("%cIndice Git: Cette commande montre même les commits 'perdus'", "color: #9b59b6");
+            console.log("%c$ git ____", "color: #50fa7b; font-weight: bold");
         });
+
+
     </script>
 </body>
 </html>
